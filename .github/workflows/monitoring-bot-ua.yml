@@ -28,6 +28,7 @@ jobs:
         flake8 zakaz_ua --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Build lambda
       run: |
+        mkdir $TARGET
         mkdir $TARGET/monitoring-bot-ui
         pip install -r requirements.txt --target $TARGET/monitoring-bot-ui
         cp monitoring-bot-ui/*.py $TARGET/monitoring-bot-ui -r
