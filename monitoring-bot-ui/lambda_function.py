@@ -6,6 +6,8 @@ import requests
 TELEGRAM_SEND_URL = 'https://api.telegram.org/bot%(token)s/sendMessage?chat_id=%(chat_id)s' \
                     '&parse_mode=Markdown&text=%(message)s'
 
+TELEGRAM_SEND_URL_v2 = 'https://api.telegram.org/bot%(token)s/sendMessage'
+
 TOKEN = os.getenv('TOKEN')
 DB_HOST = os.getenv('DB_HOST')
 DB_PORT = os.getenv('DB_PORT', 3306)
@@ -13,13 +15,15 @@ DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
-DB = pymysql.connect(
-    host=DB_HOST,
-    port=3306,
-    user=DB_USER,
-    password=DB_PASSWORD,
-    database=DB_NAME
-)
+# DB = pymysql.connect(
+#     host=DB_HOST,
+#     port=3306,
+#     user=DB_USER,
+#     password=DB_PASSWORD,
+#     database=DB_NAME
+# )
+
+
 
 
 def lambda_handler(event, context):
@@ -67,19 +71,26 @@ def add_user(user_id):
     sql_query = 'INSERT INTO tbl_user (user_id) VALUES (%s);'
     with DB.cursor() as cursor:
         cursor.execute(sql_query, user_id)
-    DB.commit()
+    # DB.commit()
 
 
 def remove_user(user_id):
     sql_query = 'DELETE FROM tbl_user WHERE user_id = %s;'
     with DB.cursor() as cursor:
         cursor.execute(sql_query, user_id)
-    DB.commit()
+    # DB.commit()
 
 
-def exists(user_id):
-    sql_query = 'SELECT user_id FROM tbl_user WHERE user_id = %s;'
-    with DB.cursor() as cursor:
-        cursor.execute(sql_query, user_id)
-        result = cursor.fetchone()
-        return True if result else False
+# def exists(user_id):
+#     sql_query = 'SELECT user_id FROM tbl_user WHERE user_id = %s;'
+#     with DB.cursor() as cursor:
+#         cursor.execute(sql_query, user_id)
+#         result = cursor.fetchone()
+#         return True if result else False
+
+
+import http_helper
+# http_helper.get_auchan_dates()
+http_helper.telegram_send_message(TOKEN)
+# http_helper.convert_date('2020-04-07')
+# http_helper.calculate_end_time(1586264400000.0)
