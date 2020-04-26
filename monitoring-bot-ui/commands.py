@@ -1,0 +1,7 @@
+change_location = 'Change location'
+yes = 'Yes'
+no = 'No'
+add_new = 'Add new'
+change_store = 'Change store'
+start_monitoring = 'Start monitoring'
+stop_monitoring = 'Stop monitoring'
